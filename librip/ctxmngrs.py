@@ -6,3 +6,14 @@
 #   sleep(5.5)
 #
 # После завершения блока должно вывестись в консоль примерно 5.5
+
+from contextlib import contextmanager
+from time import monotonic
+
+
+@contextmanager
+def timer():
+    time = monotonic()
+    yield
+    passed = monotonic() - time
+    print(passed)

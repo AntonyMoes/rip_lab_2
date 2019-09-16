@@ -35,3 +35,22 @@
 # test_4
 # 1
 # 2
+
+from typing import Callable
+
+
+def print_result(func: Callable):
+    def helper(*args, **kwargs):
+        res = func(*args, **kwargs)
+
+        print(func.__name__)
+        if isinstance(res, list):
+            print('\n'.join(str(v) for v in res))
+        elif isinstance(res, dict):
+            print('\n'.join([f'{k} = {v}' for k, v in res.items()]))
+        else:
+            print(res)
+
+        return res
+
+    return helper

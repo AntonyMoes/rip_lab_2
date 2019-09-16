@@ -5,8 +5,9 @@ from librip.ctxmngrs import timer
 from librip.decorators import print_result
 from librip.gens import field, gen_random
 from librip.iterators import Unique as unique
+from typing import List, Dict
 
-path = None
+path = sys.argv[1]
 
 # Здесь необходимо в переменную path получить
 # путь до файла, который был передан при запуске
@@ -22,23 +23,23 @@ with open(path) as f:
 # При этом строки должны быть не длиннее 80 символов
 
 @print_result
-def f1(arg):
-    raise NotImplemented
+def f1(arg: List[Dict]):
+    return sorted(unique(field(arg, 'job-name'), True), key=lambda x: x.lower())
 
 
 @print_result
-def f2(arg):
-    raise NotImplemented
+def f2(arg: List[str]):
+    return list(filter(lambda j: j.lower().startswith('программист'), arg))
 
 
 @print_result
-def f3(arg):
-    raise NotImplemented
+def f3(arg: List[str]):
+    return list(map(lambda s: s + ' с опытом Python', arg))
 
 
 @print_result
-def f4(arg):
-    raise NotImplemented
+def f4(arg: List[str]):
+    return [f'{vac}, зарплата {sal} руб.'for vac, sal in zip(arg, gen_random(100000, 200000, len(arg)))]
 
 
 with timer():
